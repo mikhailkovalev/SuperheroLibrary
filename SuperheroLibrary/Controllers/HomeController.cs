@@ -28,11 +28,5 @@ namespace SuperheroLibrary.Controllers
 
             return View();
         }
-
-        [HttpGet]
-        public ActionResult CreateHero()
-        {
-            return View();
-        }
     }
 }
