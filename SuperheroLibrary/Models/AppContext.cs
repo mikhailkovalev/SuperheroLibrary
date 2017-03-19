@@ -11,6 +11,8 @@ namespace SuperheroLibrary.Models
         public AppContext(): base("DefaultConnection")
         { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User>         Users     { get; set; }
+        public DbSet<Superability> Abilities { get; set; }
+        public DbSet<Superhero>    Heroes    { get; set; }
     }
 }

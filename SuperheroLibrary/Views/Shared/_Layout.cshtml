@@ -2,41 +2,56 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 </head>
+<nav>
+    <table>
+        <tr>
+            <td>
+                @Html.ActionLink("Главная", "Index", "Home")
+            </td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    @Html.ActionLink("Выйти", "Logoff", "Account")
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Войти", "Login", "Account")
+                </td>
+                <td>
+                    @Html.ActionLink("Зарегистрироваться", "Register", "Account")
+                </td>
+            }
+        </tr>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <tr>
+                <!--Create-->
+                <td>
+                    @Html.ActionLink("Создать Героя", "CreateHero", "Home")
+                </td>
+                <td>
+                    @Html.ActionLink("Создать Способность", "CreateAbility", "Home")
+                </td>
+            </tr>
+            <tr>
+                <!--Show-->
+                <td>
+                    <p>Перейти к списку героев</p>
+                </td>
+                <td>
+                    @Html.ActionLink("Перейти к списку способностей", "AbilityList", "Home")
+                </td>
+            </tr>
+        }
+    </table>
+</nav>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderBody()
 </body>
 </html>

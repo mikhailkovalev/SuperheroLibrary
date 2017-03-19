@@ -1,0 +1,34 @@
+﻿@model SuperheroLibrary.Models.Superability
+
+@{
+    ViewBag.Title = "EditAbility";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Редактирование суперспособности</h3>
+@using (Html.BeginForm("EditAbility", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="Id" value="@Model.Id"/>
+    <table>
+        <tr>
+            <td><p>Название</p></td>
+            <td><input type="text" name="Name" value="@Model.Name" /></td>
+        </tr>
+        <tr>
+            <td><p>Описание</p></td>
+            <td><input type="text" name="Description" value="@Model.Description"/></td>
+        </tr>
+        <tr>
+            <td><p>Изображение</p></td>
+            <img style='width:50px;height:80px;' 
+                 src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)"/>
+            <td><input type="file" name="uploadImage"/></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Сохранить" />
+            </td>
+        </tr>
+    </table>
+}
+

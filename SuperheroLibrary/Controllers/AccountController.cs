@@ -10,6 +10,7 @@ namespace SuperheroLibrary.Controllers
 {
     public class AccountController : Controller
     {
+        //private AppContext db = new AppContext();
         public ActionResult Login()
         {
             return View();

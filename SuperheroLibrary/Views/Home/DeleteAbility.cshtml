@@ -1,0 +1,23 @@
+﻿@model SuperheroLibrary.Models.Superability
+@{
+    ViewBag.Title = "DeleteAbility";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Подтверждение удаления способности</h3>
+<dl>
+    <dt><p>Название</p></dt>
+    <dd><p>@Model.Name</p></dd>
+
+    <dt><p>Описание</p></dt>
+    <dd><p>@Model.Description</p></dd>
+
+    <dt><p>Изображение</p></dt>
+    <dd><img style='width:50px;height:80px;'
+     src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)" /></dd>
+    @using (Html.BeginForm())
+    {
+        <input type="submit" value="Удалить"/>
+    }
+</dl>
+

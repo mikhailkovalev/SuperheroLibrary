@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Создание суперспособности";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <p><b><i>@User.Identity.Name</i></b>, добро пожаловать в меню создания суперспособностей!</p>
+    <h3>Создание новой суперспособности</h3>
+    @using (Html.BeginForm("CreateAbility", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    <p>Название</p>
+                </td>
+                <td>
+                    <input type="text" name="Name"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Описание</p>
+                </td>
+                <td>
+                    <input type="text" name="Description" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Изображение
+                </td>
+                <td>
+                    <input type="file" name="uploadImage" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Создать"/>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
