@@ -7,7 +7,7 @@
 <div>
     <p><b><i>@User.Identity.Name</i></b>, добро пожаловать в меню создания суперспособностей!</p>
     <h3>Создание новой суперспособности</h3>
-    @using (Html.BeginForm("CreateAbility", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Create", "Ability", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <table>
             <tr>
@@ -15,7 +15,7 @@
                     <p>Название</p>
                 </td>
                 <td>
-                    <input type="text" name="Name"/>
+                    <input type="text" name="Name" />
                 </td>
             </tr>
             <tr>
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="submit" value="Создать"/>
+                    <input type="submit" value="Создать" />
                 </td>
             </tr>
         </table>

@@ -6,7 +6,6 @@
 }
 
 <p>Способность <b><i>&laquo;@Model.Name&raquo;</i></b> успешно изменена пользователем <b><i>@Model.User.Login</i></b>!</p>
-<p>Пользователь @Model.User.Login имеет на данный момент @Model.User.Abilities.Count способностей!</p>
 <p>
     @Html.Raw("<img style = 'width:200px; height:320px;' src=\"data:image/jpeg;base64,"
                                        + Convert.ToBase64String(Model.Image) + "\" />")

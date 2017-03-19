@@ -27,10 +27,10 @@
                 @a.Description
             </td>
             <td>
-                @Html.ActionLink("Редактировать", "EditAbility", "Home", new { id = a.Id }, null)
+                @Html.ActionLink("Редактировать", "Edit", "Ability", new { id = a.Id }, null)
             </td>
             <td>
-                @Html.ActionLink("Удалить", "DeleteAbility", "Home", new { id = a.Id }, null)
+                @Html.ActionLink("Удалить", "Delete", "Ability", new { id = a.Id }, null)
             </td>
         </tr>
     }

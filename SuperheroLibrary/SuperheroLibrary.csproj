@@ -156,6 +156,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AbilityController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -212,12 +213,12 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\CreateHero.cshtml" />
-    <Content Include="Views\Home\CreateAbility.cshtml" />
-    <Content Include="Views\Home\AbilityAdded.cshtml" />
-    <Content Include="Views\Home\AbilityList.cshtml" />
-    <Content Include="Views\Home\EditAbility.cshtml" />
-    <Content Include="Views\Home\AbilityEdited.cshtml" />
-    <Content Include="Views\Home\DeleteAbility.cshtml" />
+    <Content Include="Views\Ability\Create.cshtml" />
+    <Content Include="Views\Ability\Created.cshtml" />
+    <Content Include="Views\Ability\Edit.cshtml" />
+    <Content Include="Views\Ability\Edited.cshtml" />
+    <Content Include="Views\Ability\Show.cshtml" />
+    <Content Include="Views\Ability\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
