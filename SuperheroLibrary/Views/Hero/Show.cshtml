@@ -1,0 +1,39 @@
+﻿@using System.Collections.Generic
+@using SuperheroLibrary.Models
+@model IEnumerable<Superhero>
+@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Список героев:</h3>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Имя</th>
+        <th>Описание</th>
+        <th>Количество способностей</th>
+    </tr>
+    @foreach (var h in Model)
+    {
+        <tr>
+            <td><img style='width:50px;height:80px;'
+     src="data:image/jpeg;base64,@Convert.ToBase64String(h.Image)" /></td>
+
+            <td><p>@h.Name</p></td>
+            <td><p>@h.Description</p></td>
+            <td>
+                <ul>
+                    @foreach (var a in h.Abilities)
+                    {
+                        <li>@a.Name</li>
+                    }
+                </ul>
+            </td>
+            <td>@Html.ActionLink("Редактировать", "Edit", "Hero", new { id = h.Id }, null)</td>
+            <td>@Html.ActionLink("Удалить", "Delete", "Hero", new { id = h.Id }, null)</td>
+        </tr>
+    }
+</table>
+

@@ -32,7 +32,7 @@
             <tr>
                 <!--Create-->
                 <td>
-                    @Html.ActionLink("Создать Героя", "CreateHero", "Home")
+                    @Html.ActionLink("Создать Героя", "Create", "Hero")
                 </td>
                 <td>
                     @Html.ActionLink("Создать Способность", "Create", "Ability")
@@ -41,7 +41,7 @@
             <tr>
                 <!--Show-->
                 <td>
-                    <p>Перейти к списку героев</p>
+                    @Html.ActionLink("Перейти к списку героев", "Show", "Hero")
                 </td>
                 <td>
                     @Html.ActionLink("Перейти к списку способностей", "Show", "Ability")

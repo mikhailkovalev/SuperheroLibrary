@@ -1,0 +1,57 @@
+﻿@using SuperheroLibrary.Models
+@model Superhero
+
+@{
+    ViewBag.Title = "Edit Hero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Редактирование суперспособности</h3>
+@using (Html.BeginForm("Edit", "Hero", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <table>
+        <tr>
+            <td><p>Название</p></td>
+            <td><input type="text" name="Name" value="@Model.Name" /></td>
+        </tr>
+        <tr>
+            <td><p>Описание</p></td>
+            <td><input type="text" name="Description" value="@Model.Description" /></td>
+        </tr>
+        <tr>
+            <td><p>Изображение</p></td>
+            <img style='width:50px;height:80px;'
+                 src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)" />
+            <td><input type="file" name="uploadImage" /></td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    @{
+                        using (var db = new SuperheroLibrary.Models.AppContext())
+                        {
+                            int userId = db.Users.First(u => u.Login == User.Identity.Name).Id;
+                            var abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
+                            foreach (Superability a in abilities)
+                            {
+                                <li>
+                                    <input type="checkbox" name="selectedAbilities"
+                                           value="@a.Id"
+                                           @(Model.Abilities.Any(ab => ab.Id == a.Id) ? "checked=\"checked\"" : "") />
+                                    @a.Name
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Сохранить" />
+            </td>
+        </tr>
+    </table>
+}
+

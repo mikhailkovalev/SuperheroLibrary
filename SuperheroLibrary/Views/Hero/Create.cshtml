@@ -1,0 +1,47 @@
+﻿@using System.Collections.Generic
+@using SuperheroLibrary.Models
+@model IEnumerable<Superability>
+
+@{
+    ViewBag.Title = "CreateHero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Hero", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table>
+        <tr>
+            <td><p>Имя</p></td>
+            <td><input type="text" name="Name"/></td>
+        </tr>
+        <tr>
+            <td><p>Описание</p></td>
+            <td><input type="text" name="Description"/></td>
+        </tr>
+        <tr>
+            <td><p>Изображение</p></td>
+            <td><input type="file" name="uploadImage"/></td>
+        </tr>
+        <tr>
+            <td><p>Способности</p></td>
+            <td>
+                <ul>
+                    @{
+                        foreach (Superability a in Model)
+                        {
+                            <li>
+                                <input type="checkbox" name="selectedAbilities"
+                                       value="@a.Id" />
+                                @a.Name
+                            </li>
+                        }
+                    }
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Создать"/></td>
+        </tr>
+    </table>
+}
+

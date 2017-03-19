@@ -10,7 +10,10 @@ namespace SuperheroLibrary.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Superability> Abilities { get; set; }
+        public byte[] Image { get; set; }
+        public User User { get; set; }
+        public int? UserId { get; set; }
+        public virtual ICollection<Superability> Abilities { get; set; }
 
         public Superhero()
         {
