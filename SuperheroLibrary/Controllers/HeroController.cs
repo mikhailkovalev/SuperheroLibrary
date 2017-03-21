@@ -35,7 +35,14 @@ namespace SuperheroLibrary.Controllers
                 using (var db = new AppContext())
                 {
                     userId = db.Users.First(u => u.Login == userName).Id;
-                    abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
+                    if (selectedAbilities != null)
+                    {
+                        abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
+                    }
+                    else
+                    {
+                        abilities = new List<Superability>();
+                    }
                 }
                 return View(abilities);
             }
@@ -55,7 +62,14 @@ namespace SuperheroLibrary.Controllers
                 if (user != null)
                 {
                     hero.User = user;
-                    abilities = db.Abilities.Where(a => a.UserId == user.Id && selectedAbilities.Contains(a.Id));
+                    if (selectedAbilities != null)
+                    {
+                        abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == user.Id));
+                    }
+                    else
+                    {
+                        abilities = new List<Superability>();
+                    }
                     foreach (var a in abilities)
                     {
                         hero.Abilities.Add(a);
@@ -106,12 +120,14 @@ namespace SuperheroLibrary.Controllers
                 keptHero.Description = hero.Description;
 
                 keptHero.Abilities.Clear();
-                var abilities = db.Abilities.Where(a => selectedAbilities.Contains(a.Id));
-                foreach (var a in abilities)
+                if (selectedAbilities != null)
                 {
-                    keptHero.Abilities.Add(a);
+                    var abilities = db.Abilities.Where(a => selectedAbilities.Contains(a.Id));
+                    foreach (var a in abilities)
+                    {
+                        keptHero.Abilities.Add(a);
+                    }
                 }
-
                 if (uploadImage != null)
                 {
                     keptHero.Image = hero.Image;
