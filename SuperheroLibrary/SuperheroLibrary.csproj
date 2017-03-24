@@ -169,6 +169,22 @@
     <Compile Include="Models\Superability.cs" />
     <Compile Include="Models\Superhero.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\AbilitiesShowModel.cs" />
+    <Compile Include="Models\ViewModels\AbilityCreateModel.cs" />
+    <Compile Include="Models\ViewModels\AbilityDeleteModel.cs" />
+    <Compile Include="Models\ViewModels\AbilityEditModel.cs" />
+    <Compile Include="Models\ViewModels\AbilityShowModel.cs" />
+    <Compile Include="Models\ViewModels\AccountLoginModel.cs" />
+    <Compile Include="Models\ViewModels\AccountRegisterModel.cs" />
+    <Compile Include="Models\ViewModels\BaseAbilityModel.cs" />
+    <Compile Include="Models\ViewModels\BaseHeroModel.cs" />
+    <Compile Include="Models\ViewModels\BaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\HeroCreateModel.cs" />
+    <Compile Include="Models\ViewModels\HeroDeleteModel.cs" />
+    <Compile Include="Models\ViewModels\HeroEditModel.cs" />
+    <Compile Include="Models\ViewModels\HeroesShowModel.cs" />
+    <Compile Include="Models\ViewModels\HeroShowModel.cs" />
+    <Compile Include="Models\ViewModels\HomeIndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
