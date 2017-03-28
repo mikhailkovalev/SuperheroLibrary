@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using SuperheroLibrary.Models;
+using SuperheroLibrary.Models.ViewModels;
+using SuperheroLibrary.Services;
 
 namespace SuperheroLibrary.Controllers
 {
     public class AbilityController : Controller
     {
+        private UserService userService = new UserService();
+        private AbilityService abilityService = new AbilityService();
+        
         [HttpGet]
         public ActionResult Create()
         {
@@ -17,115 +23,51 @@ namespace SuperheroLibrary.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Superability ability, HttpPostedFileBase uploadImage)
+        public ActionResult Create(AbilityCreateModel model)
         {
-            if (!ModelState.IsValid || uploadImage == null)
+            if (!ModelState.IsValid || model.UploadImage == null)
             {
-                return View(ability);
+                return View(model);
             }
-
-            byte[] imageData = null;
-
-            using (var br = new BinaryReader(uploadImage.InputStream))
-            {
-                imageData = br.ReadBytes(uploadImage.ContentLength);
-            }
-
-            ability.Image = imageData;
-            User user = null;
-            using (var db = new AppContext())
-            {
-                user = db.Users.FirstOrDefault(u => u.Login == User.Identity.Name);
-                if (user != null)
-                {
-                    ability.User = user;
-                }
-                db.Abilities.Add(ability);
-                db.SaveChanges();
-            }
-            return View("Created", ability);
+            model.UserId = userService.GetUserIdByName(User.Identity.Name);
+            abilityService.CreateAbility(model);
+            return View("Created", model);
+            
         }
         
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            Superability ability = null;
-            using (var db = new AppContext())
-            {
-                ability = db.Abilities.Find(id);
-            }
-            return View(ability);
+            return View(abilityService.GetById(id));
         }
 
         [HttpPost]
-        public ActionResult Edit(Superability ability, HttpPostedFileBase uploadImage)
+        public ActionResult Edit(AbilityEditModel model)
         {
-            if (uploadImage != null)
-            {
-                byte[] imageData = null;
-                using (var br = new BinaryReader(uploadImage.InputStream))
-                {
-                    imageData = br.ReadBytes(uploadImage.ContentLength);
-                }
-                ability.Image = imageData;
-            }
-            using (var db = new AppContext())
-            {
-                var keptAbility = db.Abilities.Find(ability.Id);
-                keptAbility.Name = ability.Name;
-                keptAbility.Description = ability.Description;
-                if (uploadImage != null)
-                {
-                    keptAbility.Image = ability.Image;
-                }
-                else
-                {
-                    ability.Image = keptAbility.Image;
-                }
-                db.SaveChanges();
-                ability.User = db.Users.Find(keptAbility.UserId);
-            }
-
-            return View("Edited", ability);
+            abilityService.EditAbility(model);
+            return View("Edited", model);
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Superability ability = null;
-            using (var db = new AppContext())
-            {
-                ability = db.Abilities.Find(id);
-            }
-            return View(ability);
+            return View(abilityService.GetById(id));
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult Deleting(int id)
         {
-            Superability ability = null;
-            using (var db = new AppContext())
-            {
-                ability = db.Abilities.Find(id);
-                db.Abilities.Remove(ability);
-                db.SaveChanges();
-            }
+            abilityService.DeleteAbility(id);
             return RedirectToAction("Show");
         }
 
         [HttpGet]
         public ActionResult Show()
         {
-            List<Superability> abilities = new List<Superability>();
-
-            string userName = User.Identity.Name;
-            int userId = 0;
-            using (var db = new AppContext())
-            {
-                userId = db.Users.FirstOrDefault(u => u.Login == userName).Id;
-                abilities.AddRange(db.Abilities.Where(a => a.UserId == userId));
-            }
-            return View(abilities);
+            /*int? userId = userService.GetUserIdByName(User.Identity.Name);
+            var abilities = abilityService.GetAbilitiesBelongsUser(userId);*/
+            var model = abilityService.GetShowModel(User.Identity.Name);
+            return View(model);
         }
     }
 }

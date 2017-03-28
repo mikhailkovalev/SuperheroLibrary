@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using SuperheroLibrary.Models;
+using SuperheroLibrary.Models.ViewModels;
 
 namespace SuperheroLibrary.Controllers
 {
@@ -12,7 +14,8 @@ namespace SuperheroLibrary.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            HomeIndexModel model = new HomeIndexModel { UserName = User.Identity.Name, Title = "Главная" };
+            return View(model);
         }
 
         public ActionResult About()

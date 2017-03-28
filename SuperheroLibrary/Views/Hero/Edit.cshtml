@@ -1,5 +1,5 @@
-﻿@using SuperheroLibrary.Models
-@model Superhero
+﻿@using SuperheroLibrary.Models.ViewModels
+@model HeroEditModel
 
 @{
     ViewBag.Title = "Edit Hero";
@@ -23,26 +23,18 @@
             <td><p>Изображение</p></td>
             <img style='width:50px;height:80px;'
                  src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Image)" />
-            <td><input type="file" name="uploadImage" /></td>
+            <td><input type="file" name="UploadImage" /></td>
         </tr>
         <tr>
             <td>
                 <ul>
-                    @{
-                        using (var db = new SuperheroLibrary.Models.AppContext())
-                        {
-                            int userId = db.Users.First(u => u.Login == User.Identity.Name).Id;
-                            var abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
-                            foreach (Superability a in abilities)
-                            {
-                                <li>
-                                    <input type="checkbox" name="selectedAbilities"
-                                           value="@a.Id"
-                                           @(Model.Abilities.Any(ab => ab.Id == a.Id) ? "checked=\"checked\"" : "") />
-                                    @a.Name
-                                </li>
-                            }
-                        }
+                    @foreach(var a in Model.UserAbilities)
+                    {
+                        <li>
+                            <input type="checkbox" name="SelectedAbilities" value="@a.Id"
+                                   @(Model.SelectedAbilities.Contains(a.Id) ? "checked=\"checked\"" : "") >
+                            @a.Name
+                        </li>
                     }
                 </ul>
             </td>

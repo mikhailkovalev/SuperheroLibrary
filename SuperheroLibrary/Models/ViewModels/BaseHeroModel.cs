@@ -11,6 +11,7 @@ namespace SuperheroLibrary.Models.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public int? UserId { get; set; }
+        public byte[] Image { get; set; }
         public ICollection<Superability> Abilities { get; set; }
     }
 }

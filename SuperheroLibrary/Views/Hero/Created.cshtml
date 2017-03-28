@@ -1,11 +1,11 @@
-﻿@model SuperheroLibrary.Models.Superhero
+﻿@model SuperheroLibrary.Models.ViewModels.HeroCreateModel
 
 @{
     ViewBag.Title = "Ability Added";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>Герой <b><i>&laquo;@Model.Name&raquo;</i></b> успешно добавлен пользователем <b><i>@Model.User.Login</i></b>!</p>
+<p>Герой <b><i>&laquo;@Model.Name&raquo;</i></b> успешно добавлен!</p>
 <p>
     @Html.Raw("<img style = 'width:200px; height:320px;' src=\"data:image/jpeg;base64,"
                                        + Convert.ToBase64String(Model.Image) + "\" />")

@@ -6,15 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SuperheroLibrary.Models.ViewModels
 {
-    public class AccountRegisterModel: BaseViewModel
+    public class AccountRegisterModel: AccountBaseModel
     {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]

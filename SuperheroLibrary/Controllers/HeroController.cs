@@ -4,88 +4,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using SuperheroLibrary.Models;
+using SuperheroLibrary.Services;
+using SuperheroLibrary.Models.ViewModels;
 
 namespace SuperheroLibrary.Controllers
 {
     public class HeroController : Controller
     {
+        /*private UserService    userService    = new UserService();
+        
+        private AbilityService abilityService = new AbilityService();*/
+        private HeroService heroService = new HeroService();
         [HttpGet]
         public ActionResult Create()
         {
-            int userId = 0;
-            string userName = User.Identity.Name;
-            IEnumerable<Superability> abilities = null;
-            using (var db = new AppContext())
-            {
-                userId = db.Users.First(u => u.Login == userName).Id;
-                abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
-            }
-            return View(abilities);
+            var model = heroService.GetHeroCreateModel(User.Identity.Name);
+            return View(model);
+
         }
 
         [HttpPost]
-        public ActionResult Create(Superhero hero, HttpPostedFileBase uploadImage, int[] selectedAbilities)
+        public ActionResult Create(HeroCreateModel model)
         {
-            string userName = User.Identity.Name;
-            IEnumerable<Superability> abilities = null;
-            if (!ModelState.IsValid || uploadImage == null)
+            if (!ModelState.IsValid || model.UploadImage == null)
             {
-                int userId = 0;
-                using (var db = new AppContext())
-                {
-                    userId = db.Users.First(u => u.Login == userName).Id;
-                    if (selectedAbilities != null)
-                    {
-                        abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == userId));
-                    }
-                    else
-                    {
-                        abilities = new List<Superability>();
-                    }
-                }
-                return View(abilities);
+                return View(model);
             }
-
-            byte[] imageData = null;
-            using (var br = new BinaryReader(uploadImage.InputStream))
-            {
-                imageData = br.ReadBytes(uploadImage.ContentLength);
-            }
-
-            hero.Image = imageData;
-
-            User user = null;
-            using (var db = new AppContext())
-            {
-                user = db.Users.FirstOrDefault(u => u.Login == userName);
-                if (user != null)
-                {
-                    hero.User = user;
-                    if (selectedAbilities != null)
-                    {
-                        abilities = new List<Superability>(db.Abilities.Where(a => a.UserId == user.Id));
-                    }
-                    else
-                    {
-                        abilities = new List<Superability>();
-                    }
-                    foreach (var a in abilities)
-                    {
-                        hero.Abilities.Add(a);
-                    }
-                }
-
-                db.Heroes.Add(hero);
-                db.SaveChanges();
-            }
-            return View("Created", hero);
+            heroService.CreateHero(model);
+            return View("Created", model);
         }
+
+        
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            Superhero hero = null;
+            /*Superhero hero = null;
             using (var db = new AppContext())
             {
                 hero = db.Heroes.First(h => h.Id == id);
@@ -98,10 +54,12 @@ namespace SuperheroLibrary.Controllers
             else
             {
                 return RedirectToAction("Show");
-            }
+            }*/
+            var hero = heroService.GetHeroEditModel(id);
+            return View(hero);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Edit(Superhero hero, HttpPostedFileBase uploadImage, int[] selectedAbilities)
         {
             if (uploadImage != null)
@@ -140,36 +98,32 @@ namespace SuperheroLibrary.Controllers
                 hero.User = db.Users.Find(keptHero.UserId);
             }
             return View("Edited", hero);
+        }*/
+        [HttpPost]
+        public ActionResult Edit(HeroEditModel model)
+        {
+            heroService.EditHero(model);
+            return View("Edited", model);
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Superhero hero = null;
-            using (var db = new AppContext())
-            {
-                hero = db.Heroes.Find(id);
-            }
+            var hero = heroService.GetById(id);
             return View(hero);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult Deleting(int id)
         {
-            Superhero hero = null;
-            using (var db = new AppContext())
-            {
-                hero = db.Heroes.Find(id);
-                db.Heroes.Remove(hero);
-                db.SaveChanges();
-            }
+            heroService.DeleteHero(id);
             return RedirectToAction("Show");
         }
 
         [HttpGet]
         public ActionResult Show()
         {
-            int userId = 0;
+            /*int userId = 0;
             string userName = User.Identity.Name;
             IEnumerable<Superhero> heroes = null;
 
@@ -183,7 +137,9 @@ namespace SuperheroLibrary.Controllers
                 }
             }
 
-            return View(heroes);
+            return View(heroes);*/
+            var model = heroService.GetShowModel(User.Identity.Name);
+            return View(model);
         }
     }
 }

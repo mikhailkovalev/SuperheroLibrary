@@ -1,6 +1,5 @@
-﻿@using System.Collections.Generic
-@using SuperheroLibrary.Models
-@model IEnumerable<Superhero>
+﻿
+@model SuperheroLibrary.Models.ViewModels.HeroesShowModel
 @{
     ViewBag.Title = "Show";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +14,7 @@
         <th>Описание</th>
         <th>Количество способностей</th>
     </tr>
-    @foreach (var h in Model)
+    @foreach (var h in Model.HeroesList)
     {
         <tr>
             <td><img style='width:50px;height:80px;'

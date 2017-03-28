@@ -4,13 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+
+using SuperheroLibrary.Services;
 using SuperheroLibrary.Models;
+using SuperheroLibrary.Models.ViewModels;
 
 namespace SuperheroLibrary.Controllers
 {
     public class AccountController : Controller
     {
-        //private AppContext db = new AppContext();
+        private UserService userService = new UserService();
         public ActionResult Login()
         {
             return View();
@@ -18,20 +21,15 @@ namespace SuperheroLibrary.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(AccountLoginModel model)
         {
             if (ModelState.IsValid)
             {
                 // поиск пользователя в бд
-                User user = null;
-                using (AppContext db = new AppContext())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Name && u.Password == model.Password);
-
-                }
+                User user = userService.FindUser(model);
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Name, true);
+                    FormsAuthentication.SetAuthCookie(model.Login, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -49,31 +47,14 @@ namespace SuperheroLibrary.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(AccountRegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = null;
-                using (AppContext db = new AppContext())
+                if (userService.RegisterUser(model))
                 {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Name);
-                }
-                if (user == null)
-                {
-                    // создаем нового пользователя
-                    using (AppContext db = new AppContext())
-                    {
-                        db.Users.Add(new User { Login = model.Name, Password = model.Password});
-                        db.SaveChanges();
-
-                        user = db.Users.Where(u => u.Login == model.Name && u.Password == model.Password).FirstOrDefault();
-                    }
-                    // если пользователь удачно добавлен в бд
-                    if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(model.Name, true);
-                        return RedirectToAction("Index", "Home");
-                    }
+                    FormsAuthentication.SetAuthCookie(model.Login, true);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

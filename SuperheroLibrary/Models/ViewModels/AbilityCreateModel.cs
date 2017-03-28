@@ -9,5 +9,6 @@ namespace SuperheroLibrary.Models.ViewModels
     public class AbilityCreateModel: BaseAbilityModel
     {
         public HttpPostedFileBase UploadImage { get; set; }
+        public byte[] Image { get; set; }
     }
 }

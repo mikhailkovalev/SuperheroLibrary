@@ -6,12 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SuperheroLibrary.Models.ViewModels
 {
-    public class AccountLoginModel: BaseViewModel
+    public class AccountLoginModel: AccountBaseModel
     {
-        [Required]
-        public string Login { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        
     }
 }

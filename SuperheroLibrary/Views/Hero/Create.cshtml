@@ -1,6 +1,6 @@
 ﻿@using System.Collections.Generic
 @using SuperheroLibrary.Models
-@model IEnumerable<Superability>
+@model SuperheroLibrary.Models.ViewModels.HeroCreateModel
 
 @{
     ViewBag.Title = "CreateHero";
@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("Create", "Hero", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <input type="hidden" value="@Model.UserId" name="UserId" />
     <table>
         <tr>
             <td><p>Имя</p></td>
@@ -20,17 +21,17 @@
         </tr>
         <tr>
             <td><p>Изображение</p></td>
-            <td><input type="file" name="uploadImage"/></td>
+            <td><input type="file" name="UploadImage"/></td>
         </tr>
         <tr>
             <td><p>Способности</p></td>
             <td>
                 <ul>
                     @{
-                        foreach (Superability a in Model)
+                        foreach (Superability a in Model.UserAblilities)
                         {
                             <li>
-                                <input type="checkbox" name="selectedAbilities"
+                                <input type="checkbox" name="SelectedAbilities"
                                        value="@a.Id" />
                                 @a.Name
                             </li>

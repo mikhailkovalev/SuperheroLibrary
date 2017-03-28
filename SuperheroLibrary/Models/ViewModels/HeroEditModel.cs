@@ -9,5 +9,7 @@ namespace SuperheroLibrary.Models.ViewModels
     {
         public HttpPostedFileBase UploadImage { get; set; }
         public byte[] Image { get; set; }
+        public int[] SelectedAbilities { get; set; }
+        public ICollection<Superability> UserAbilities { get; set; }
     }
 }
